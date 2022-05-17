@@ -1,0 +1,25 @@
+p {
+    margin-bottom: 50px;
+}
+
+.conteiner-movie {
+    position: relative;
+    top: 50px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.movies {
+    width: 100%;
+    margin: 45px auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.movies img {
+    width: 129px;
+    height: 193px;
+    margin: 9px 19px;
+}
