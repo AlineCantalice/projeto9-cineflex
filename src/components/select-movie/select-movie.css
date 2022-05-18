@@ -18,8 +18,19 @@ p {
     justify-content: center;
 }
 
-.movies img {
+.movie {
+    width: 145px;
+    height: 209px;
+    border-radius: 3px;
+    margin: 6px 15px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 2px 4px 2px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.movie img {
     width: 129px;
     height: 193px;
-    margin: 9px 19px;
 }
