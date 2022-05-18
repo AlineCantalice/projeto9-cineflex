@@ -9,7 +9,6 @@ export default function Footer({ srcImage, movieName, weekday, showtime }) {
             <div className="footer-text">
                 <p>{movieName}</p>
                 {weekday ? <p>{weekday} - {showtime}</p> : <></>}
-                <p>Quinta-feira - 15:00</p>
             </div>
         </div>
     )
