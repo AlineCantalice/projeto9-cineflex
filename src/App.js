@@ -2,20 +2,32 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import SelectMovie from "./components/select-movie/SelectMovie";
 
 import "./assets/css/reset.css";
-import "./assets/css/style.css";
+import styled from "styled-components"
 import Header from "./shared/header/Header";
 import SelectSession from "./components/select-session/SelectSession";
+import SelectSeat from "./components/select-seat/SelectSeat";
 
 export default function App() {
     return (
         <BrowserRouter >
             <Header />
-            <main>
+            <Main>
                 <Routes>
                     <Route path="/" element={<SelectMovie />} />
-                    <Route path="/filme/:idMovie" element={<SelectSession />} />
+                    <Route path="/sessoes/:idMovie" element={<SelectSession />} />
+                    <Route path="/assentos/:idSession" element={<SelectSeat />} />
                 </Routes>
-            </main>
+            </Main>
         </BrowserRouter>
     )
 }
+
+const Main = styled.main`
+    position: relative;
+    top: 67px;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+`
