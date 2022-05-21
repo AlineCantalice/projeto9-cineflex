@@ -91,9 +91,6 @@ export default function SelectSeat() {
                             </Seats>
 
                             <Form onSubmit={save}>
-
-                                <input type="button"></input>
-
                                 <label htmlFor="name">Nome do comprador:</label>
                                 <input id="name" type="text" value={name} placeholder="Digite seu nome..." onChange={(e) => setName(e.target.value)} required></input>
 

@@ -6,6 +6,7 @@ import styled from "styled-components"
 import Header from "./shared/header/Header";
 import SelectSession from "./components/select-session/SelectSession";
 import SelectSeat from "./components/select-seat/SelectSeat";
+import Success from "./components/success/Success";
 
 export default function App() {
     return (
@@ -16,6 +17,7 @@ export default function App() {
                     <Route path="/" element={<SelectMovie />} />
                     <Route path="/sessoes/:idMovie" element={<SelectSession />} />
                     <Route path="/assentos/:idSession" element={<SelectSeat />} />
+                    <Route path="/sucesso" element={<Success />} />
                 </Routes>
             </Main>
         </BrowserRouter>
