@@ -40,13 +40,12 @@ const Container = styled.div`
     flex-direction: column;
 
     p {
-        margin-bottom: 50px;
+        margin-bottom: 30px;
     }
 `
 
 const Movies = styled.div`
     width: 100%;
-    margin: 45px auto;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;

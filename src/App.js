@@ -24,8 +24,11 @@ export default function App() {
 
 const Main = styled.main`
     position: relative;
+    width: 100%;
+    height: 90vh;
     top: 67px;
     left: 0;
+    margin-bottom: 125px;
     display: flex;
     justify-content: space-between;
     flex-direction: column;
