@@ -14,7 +14,7 @@ export default function Footer({ srcImage, movieName, weekday, showtime }) {
     )
 }
 
-const Footers = styled.div`
+const Footers = styled.footer`
     width: 100vw;
     height: 117px;
     background-color: #DFE6ED;

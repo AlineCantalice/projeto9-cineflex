@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 
-import movie from "../../assets/images/image 3.png";
 import styled from "styled-components";
 
 export default function SelectMovie() {

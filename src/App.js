@@ -1,14 +1,18 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import SelectMovie from "./components/select-movie/SelectMovie";
+import { useState } from "react";
 
 import "./assets/css/reset.css";
 import styled from "styled-components"
 import Header from "./shared/header/Header";
+import SelectMovie from "./components/select-movie/SelectMovie";
 import SelectSession from "./components/select-session/SelectSession";
 import SelectSeat from "./components/select-seat/SelectSeat";
 import Success from "./components/success/Success";
 
 export default function App() {
+
+    const [userData, setUserData] = useState([])
+
     return (
         <BrowserRouter >
             <Header />
@@ -16,8 +20,8 @@ export default function App() {
                 <Routes>
                     <Route path="/" element={<SelectMovie />} />
                     <Route path="/sessoes/:idMovie" element={<SelectSession />} />
-                    <Route path="/assentos/:idSession" element={<SelectSeat />} />
-                    <Route path="/sucesso" element={<Success />} />
+                    <Route path="/assentos/:idSession" element={<SelectSeat setUserData={setUserData} />} />
+                    <Route path="/sucesso" element={<Success userData = {userData} setUserData={setUserData} />} />
                 </Routes>
             </Main>
         </BrowserRouter>

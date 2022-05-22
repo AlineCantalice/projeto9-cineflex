@@ -1,6 +1,94 @@
-export default function Success(){
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+
+export default function Success({ userData, setUserData }) {
+
+    const {buyerInfo, date, title, showtime, seatsNumber} = userData;
+    const {name, cpf} = buyerInfo
+
     return (
-        <>
-        </>
+        <Container>
+            <p>Pedido feito com sucesso!</p>
+            <Info>
+                <p>Filme e sessão</p>
+                <Texts>
+                    <p>{title}</p>
+                    <p>{date} - {showtime}</p>
+                </Texts>
+                <p>Ingressos</p>
+                <Texts>
+                    {seatsNumber.map(value => (
+                        <p>{`Assento ${value}`}</p>
+                    ))}
+                </Texts>
+                <p>Comprador</p>
+                <Texts>
+                    <p>{`Nome: ${name}`}</p>
+                    <p>{`CPF: ${cpf}`}</p>
+                </Texts>
+            </Info>
+            <Link to={"/"}>
+                <button>Voltar pra Home</button>
+            </Link>
+        </Container>
     )
 }
+
+const Container = styled.div`
+    position: relative;
+    top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    p {
+        width: 60%;
+        font-weight: 700;
+        margin-bottom: 30px;
+        font-size: 24px;
+        color: #247A6B;
+        text-align: center;
+    }
+
+    button {
+        width: 225px;
+        height: 42px;
+        font-family: 'Roboto';
+        font-size: 18px;
+        color: #FFFFFF;
+        background-color: #E8833A;
+        border-radius: 3px;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 450px;
+        left: 35px;
+    }
+`
+
+const Info = styled.div`
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 80px;
+    left: 0;
+
+    p {
+        text-align: left;
+        width: 100%;
+        color: #293845;
+        margin: 3px 0;
+    }
+`
+
+const Texts = styled.div`
+    margin-bottom: 30px;
+
+    p {
+        font-weight: 400;
+        font-size: 22px;
+    }
+
+`

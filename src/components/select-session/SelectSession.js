@@ -26,7 +26,7 @@ export default function SelectSession() {
             <Container>
                 <p>Selecione o horário</p>
                 <Schedules>
-                    {sessions.map((value, index) => (
+                    {sessions.map((value) => (
                         <Schedule>
                             <p>{value.weekday} - {value.date}</p>
                             <Buttons>

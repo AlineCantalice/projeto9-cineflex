@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -6,36 +6,42 @@ import styled from "styled-components"
 
 import Footer from "../../shared/footer/Footer";
 
-export default function SelectSeat() {
-
+export default function SelectSeat({ setUserData }) {
     const { idSession } = useParams();
+    const [seatName, setSeatName] = useState([]);
     const [ids, setIds] = useState([]);
     const [name, setName] = useState("");
     const [cpf, setCpf] = useState("");
     const [info, setInfo] = useState(null);
-    const [seats, setSeats] = useState([]);
-    const [isSelected, setIsSelected] = useState(false)
+    const navigate = useNavigate();
 
     useEffect(() => {
         const promise = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${idSession}/seats`);
         promise.then(response => {
             setInfo({ ...response.data })
-            setSeats([...response.data.seats])
         })
     }, []);
 
     function changeState(id, element) {
-        if (element.id === id) {
-            if (ids.includes(id)) {
-                const array = [];
-                for (let i = 0; i < ids.length; i++) {
-                    if (ids[i] !== id) {
-                        array.push(ids[i])
+        if (!element.isAvailable) {
+            alert("Esse assento não está disponível");
+        } else {
+            if (element.id === id) {
+                if (ids.includes(id)) {
+                    const array = [];
+                    const names = [];
+                    for (let i = 0; i < ids.length; i++) {
+                        if (ids[i] !== id) {
+                            array.push(ids[i])
+                            names.push(seatName[i])
+                        }
                     }
+                    setIds(array);
+                    setSeatName(names);
+                } else {
+                    setIds([...ids, id]);
+                    setSeatName([...seatName, element.name]);
                 }
-                setIds(array);
-            } else {
-                setIds([...ids, id]);
             }
         }
     }
@@ -44,7 +50,7 @@ export default function SelectSeat() {
 
         event.preventDefault();
 
-        if (ids !== []) {
+        if (ids.length > 0) {
 
             const data = {
                 ids,
@@ -52,14 +58,25 @@ export default function SelectSeat() {
                 cpf
             }
 
-        const promise = axios.post(`https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many`, data);
-        promise.then(response => {
-            console.log(response)
-            setIds([]);
-            setCpf("");
-            setName("");
-        })
+            const promise = axios.post(`https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many`, data);
+            promise.then(() => {
+                const obj = { title: info.movie.title, date: info.day.date, showtime: info.name, buyerInfo: data, seatsNumber: seatName }
+                setUserData(obj);
+                setIds([]);
+                setCpf("");
+                setName("");
+                navigate("/sucesso");
+            })
         }
+    }
+
+    function cpfMask(value) {
+        return value
+            .replace(/\D/g, '')
+            .replace(/(\d{3})(\d)/, '$1.$2')
+            .replace(/(\d{3})(\d)/, '$1.$2')
+            .replace(/(\d{3})(\d{1,2})/, '$1-$2')
+            .replace(/(-\d{2})\d+?$/, '$1')
     }
 
     return (
@@ -70,8 +87,8 @@ export default function SelectSeat() {
                         <Container>
                             <p>Selecione o(s) assento(s)</p>
                             <Seats>
-                                {info.seats.map((value, index) => (
-                                    <Seat disabled={!value.isAvailable} status={value.isAvailable} selected={ids.includes(value.id) ? true : false} onClick={() => changeState(value.id, value)}>{value.name}</Seat>
+                                {info.seats.map((value) => (
+                                    <Seat status={value.isAvailable} selected={ids.includes(value.id) ? true : false} onClick={() => changeState(value.id, value)}>{value.name}</Seat>
                                 ))}
                             </Seats>
 
@@ -89,17 +106,15 @@ export default function SelectSeat() {
                                     <p>Indisponível</p>
                                 </Status>
                             </Seats>
-
                             <Form onSubmit={save}>
                                 <label htmlFor="name">Nome do comprador:</label>
                                 <input id="name" type="text" value={name} placeholder="Digite seu nome..." onChange={(e) => setName(e.target.value)} required></input>
 
                                 <label htmlFor="cpf">CPF do comprador:</label>
-                                <input id="cpf" type="text" value={cpf} placeholder="Digite seu CPF..." onChange={(e) => setCpf(e.target.value)} required></input>
+                                <input id="cpf" type="text" value={cpf} placeholder="Digite seu CPF..." onChange={(e) => setCpf(cpfMask(e.target.value))} required></input>
 
                                 <button type="submit">Reservar assento(s)</button>
                             </Form>
-
                         </Container>
                         <Footer srcImage={info.movie.posterURL} movieName={info.movie.title} weekday={info.day.weekday} showtime={info.name} />
                     </>
@@ -139,10 +154,6 @@ const Seat = styled.button`
     justify-content: center;
     align-items: center;
     cursor: pointer;
-
-    &:disabled {
-        cursor: default;
-    }
 `
 
 const Status = styled.div`
