@@ -61,23 +61,6 @@ const Container = styled.div`
         color: #247A6B;
         text-align: center;
     }
-
-    button {
-        width: 225px;
-        height: 42px;
-        font-family: 'Roboto';
-        font-size: 18px;
-        color: #FFFFFF;
-        background-color: #E8833A;
-        border-radius: 3px;
-        border: none;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: absolute;
-        top: 450px;
-        left: 35px;
-    }
 `
 
 const Button = styled.button`
