@@ -19,6 +19,7 @@ export default function Success({ userData, setUserData }) {
     }
 
     return (
+        <>
             <Container>
                 <p>Pedido feito com sucesso!</p>
                 <Info>
@@ -39,8 +40,9 @@ export default function Success({ userData, setUserData }) {
                         <p>{`CPF: ${cpf}`}</p>
                     </Texts>
                 </Info>
-                <button onClick={backAgain}>Voltar pra Home</button>
             </Container>
+            <Button onClick={backAgain}>Voltar pra Home</Button>
+        </>
     )
 }
 
@@ -76,6 +78,20 @@ const Container = styled.div`
         top: 450px;
         left: 35px;
     }
+`
+
+const Button = styled.button`
+    width: 225px;
+    height: 42px;
+    font-family: 'Roboto';
+    font-size: 18px;
+    color: #FFFFFF;
+    background-color: #E8833A;
+    border-radius: 3px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `
 
 const Info = styled.div`
