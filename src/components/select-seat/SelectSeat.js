@@ -50,7 +50,13 @@ export default function SelectSeat({ setUserData }) {
 
         event.preventDefault();
 
-        if (ids.length > 0) {
+        if(ids.length === 0){
+            alert("Escolha pelo menos um assento");
+        } else if(name === "") {
+            alert("Preencha seu nome");
+        } else if(cpf === "") {
+            alert("Preencha seu CPF");
+        } else {
 
             const data = {
                 ids,

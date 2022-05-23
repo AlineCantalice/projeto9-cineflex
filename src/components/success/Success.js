@@ -1,36 +1,46 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 export default function Success({ userData, setUserData }) {
 
-    const {buyerInfo, date, title, showtime, seatsNumber} = userData;
-    const {name, cpf} = buyerInfo
+    const { buyerInfo, date, title, showtime, seatsNumber } = userData;
+    const { name, cpf } = buyerInfo
+    const navigate = useNavigate();
+
+    const seatsOrdered = seatsNumber.sort((a, b) => {
+        if (a > b) return 1
+        if (a < b) return -1
+        return 0
+    })
+
+    function backAgain() {
+        setUserData({});
+        navigate("/");
+    }
 
     return (
-        <Container>
-            <p>Pedido feito com sucesso!</p>
-            <Info>
-                <p>Filme e sessão</p>
-                <Texts>
-                    <p>{title}</p>
-                    <p>{date} - {showtime}</p>
-                </Texts>
-                <p>Ingressos</p>
-                <Texts>
-                    {seatsNumber.map(value => (
-                        <p>{`Assento ${value}`}</p>
-                    ))}
-                </Texts>
-                <p>Comprador</p>
-                <Texts>
-                    <p>{`Nome: ${name}`}</p>
-                    <p>{`CPF: ${cpf}`}</p>
-                </Texts>
-            </Info>
-            <Link to={"/"}>
-                <button>Voltar pra Home</button>
-            </Link>
-        </Container>
+            <Container>
+                <p>Pedido feito com sucesso!</p>
+                <Info>
+                    <p>Filme e sessão</p>
+                    <Texts>
+                        <p>{title}</p>
+                        <p>{date} - {showtime}</p>
+                    </Texts>
+                    <p>Ingressos</p>
+                    <Texts>
+                        {seatsOrdered.map(value => (
+                            <p>{`Assento ${value}`}</p>
+                        ))}
+                    </Texts>
+                    <p>Comprador</p>
+                    <Texts>
+                        <p>{`Nome: ${name}`}</p>
+                        <p>{`CPF: ${cpf}`}</p>
+                    </Texts>
+                </Info>
+                <button onClick={backAgain}>Voltar pra Home</button>
+            </Container>
     )
 }
 
@@ -73,7 +83,7 @@ const Info = styled.div`
     flex-direction: column;
     position: absolute;
     top: 80px;
-    left: 0;
+    left: 10px;
 
     p {
         text-align: left;
